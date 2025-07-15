@@ -1,0 +1,600 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">
+            <span class="title-icon">🍳</span>
+            Discover Amazing Recipes
+        </h1>
+        <p class="hero-subtitle">Turn your ingredients into delicious meals with AI-powered recipe suggestions</p>
+        
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Recipes</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Cuisines</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Available</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="search-container">
+    <div class="search-header">
+        <h2>What's in your kitchen?</h2>
+        <p>Enter the ingredients you have and we'll find perfect recipes for you!</p>
+    </div>
+    
+    <form method="POST" action="{% url 'search_recipes' %}" class="search-form">
+        {% csrf_token %}
+        <div class="search-input-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" 
+                   name="ingredients" 
+                   class="search-input"
+                   placeholder="e.g., chicken, rice, tomatoes, onions..." 
+                   required>
+            <button type="submit" class="search-btn">
+                <i class="fas fa-magic"></i>
+                Find Recipes
+            </button>
+        </div>
+        
+        <div class="search-suggestions">
+            <span class="suggestion-label">Popular searches:</span>
+            <button type="button" class="suggestion-tag" onclick="fillSearch('chicken pasta')">Chicken Pasta</button>
+            <button type="button" class="suggestion-tag" onclick="fillSearch('vegetarian curry')">Vegetarian Curry</button>
+            <button type="button" class="suggestion-tag" onclick="fillSearch('salmon rice')">Salmon Rice</button>
+            <button type="button" class="suggestion-tag" onclick="fillSearch('beef stir fry')">Beef Stir Fry</button>
+        </div>
+    </form>
+
+    <div class="loading" id="loadingSpinner">
+        <div class="spinner"></div>
+        <p>Searching for delicious recipes...</p>
+    </div>
+</div>
+
+<div class="features-section">
+    <h2 class="section-title">Why Choose RecipeHub?</h2>
+    
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-magic"></i>
+            </div>
+            <h3>Smart Recipe Search</h3>
+            <p>Our AI-powered search finds recipes based on ingredients you already have at home</p>
+            <div class="feature-highlight">Save time & money</div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+            <h3>Detailed Nutrition Info</h3>
+            <p>Get comprehensive nutritional information for every recipe including calories, proteins, and vitamins</p>
+            <div class="feature-highlight">Stay healthy</div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Quick & Easy Filters</h3>
+            <p>Filter by cooking time, difficulty level, dietary restrictions, and cuisine type</p>
+            <div class="feature-highlight">Perfect match</div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h3>Save Your Favorites</h3>
+            <p>Create your personal recipe collection and access your favorite dishes anytime</p>
+            <div class="feature-highlight">Never lose recipes</div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3>Meal Planning</h3>
+            <p>Plan your weekly meals in advance and generate automatic shopping lists</p>
+            <div class="feature-highlight">Stay organized</div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Community Recipes</h3>
+            <p>Discover recipes shared by our community of home cooks and professional chefs</p>
+            <div class="feature-highlight">Endless inspiration</div>
+        </div>
+    </div>
+</div>
+
+<div class="how-it-works">
+    <h2 class="section-title">How It Works</h2>
+    
+    <div class="steps-container">
+        <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Enter Ingredients</h3>
+                <p>Type in the ingredients you have available in your kitchen</p>
+            </div>
+        </div>
+        
+        <div class="step-arrow">
+            <i class="fas fa-arrow-right"></i>
+        </div>
+        
+        <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Get Suggestions</h3>
+                <p>Our AI finds the best recipes that match your ingredients</p>
+            </div>
+        </div>
+        
+        <div class="step-arrow">
+            <i class="fas fa-arrow-right"></i>
+        </div>
+        
+        <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Start Cooking</h3>
+                <p>Follow the detailed instructions and enjoy your delicious meal</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)),
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+        padding: 4rem 0;
+        text-align: center;
+        color: white;
+        margin: -2rem -2rem 2rem -2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        animation: slideInUp 1s ease-out;
+    }
+
+    .title-icon {
+        display: inline-block;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+    }
+
+    .hero-subtitle {
+        font-size: 1.4rem;
+        margin-bottom: 3rem;
+        opacity: 0.95;
+        animation: slideInUp 1s ease-out 0.2s both;
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        animation: slideInUp 1s ease-out 0.4s both;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ffd700;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .search-container {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 25px;
+        padding: 3rem;
+        margin: 2rem 0;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .search-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .search-header h2 {
+        font-size: 2.2rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .search-header p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .search-input-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 60px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+
+    .search-input-container:focus-within {
+        border-color: #667eea;
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 2rem;
+        color: #999;
+        font-size: 1.2rem;
+        z-index: 2;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 1.5rem 1.5rem 1.5rem 4rem;
+        border: none;
+        border-radius: 60px;
+        font-size: 1.2rem;
+        outline: none;
+        background: transparent;
+    }
+
+    .search-input::placeholder {
+        color: #aaa;
+    }
+
+    .search-btn {
+        padding: 1.5rem 2.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 60px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+    .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .search-suggestions {
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .suggestion-label {
+        color: #666;
+        font-size: 0.9rem;
+        margin-right: 1rem;
+    }
+
+    .suggestion-tag {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        margin: 0.25rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .suggestion-tag:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .features-section {
+        margin: 4rem 0;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: white;
+        margin-bottom: 3rem;
+        font-weight: 700;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .feature-card:hover::before {
+        left: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .feature-card h3 {
+        font-size: 1.4rem;
+        color: #333;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .feature-card p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .feature-highlight {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .how-it-works {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 25px;
+        padding: 3rem;
+        margin: 4rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .steps-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .step-item {
+        text-align: center;
+        color: white;
+        max-width: 200px;
+    }
+
+    .step-number {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0 auto 1rem;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .step-content h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .step-content p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    .step-arrow {
+        color: white;
+        font-size: 1.5rem;
+        opacity: 0.7;
+    }
+
+    .loading {
+        display: none;
+        text-align: center;
+        padding: 2rem;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .loading.show {
+        display: block;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-stats {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .search-input-container {
+            flex-direction: column;
+            border-radius: 20px;
+        }
+        
+        .search-input {
+            border-radius: 20px 20px 0 0;
+            padding-left: 2rem;
+        }
+        
+        .search-btn {
+            border-radius: 0 0 20px 20px;
+            width: 100%;
+            justify-content: center;
+            margin-right: 0;
+        }
+        
+        .search-icon {
+            left: 1rem;
+        }
+        
+        .steps-container {
+            flex-direction: column;
+        }
+        
+        .step-arrow {
+            transform: rotate(90deg);
+        }
+    }
+</style>
+
+<script>
+function fillSearch(ingredients) {
+    document.querySelector('input[name="ingredients"]').value = ingredients;
+}
+
+// Add loading animation when form is submitted
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.search-form');
+    const loading = document.getElementById('loadingSpinner');
+    
+    form.addEventListener('submit', function() {
+        loading.classList.add('show');
+    });
+    
+    // Add some interactive animations
+    const featureCards = document.querySelectorAll('.feature-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.animation = `slideInUp 0.6s ease-out forwards`;
+                }, index * 100);
+            }
+        });
+    });
+    
+    featureCards.forEach(card => {
+        observer.observe(card);
+    });
+});
+</script>
+{% endblock %}
