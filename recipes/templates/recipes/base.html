@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Recipe Finder & Meal Planner{% endblock %}</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL634KW45H "></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-EL634KW45H');
+    </script>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -200,6 +210,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -223,29 +234,35 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
             }
-            
+
             .search-form {
                 flex-direction: column;
             }
-            
+
             .search-input {
                 min-width: 100%;
             }
-            
+
             .nav-links {
                 display: none;
             }
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="nav-container">
@@ -255,21 +272,21 @@
             </a>
             <ul class="nav-links">
                 <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#"><i class="fas fa-calendar-alt"></i> Meal Planner</a></li>
+                <!-- <li><a href="#"><i class="fas fa-calendar-alt"></i> Meal Planner</a></li>
                 <li><a href="#"><i class="fas fa-heart"></i> Favorites</a></li>
-                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li> -->
             </ul>
         </div>
     </nav>
 
     <div class="container">
         {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                    <i class="fas fa-exclamation-circle"></i>
-                    {{ message }}
-                </div>
-            {% endfor %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <i class="fas fa-exclamation-circle"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
         {% endif %}
 
         {% block content %}
@@ -278,10 +295,10 @@
 
     <script>
         // Add loading animation when form is submitted
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form');
             forms.forEach(form => {
-                form.addEventListener('submit', function() {
+                form.addEventListener('submit', function () {
                     const loading = document.querySelector('.loading');
                     if (loading) {
                         loading.style.display = 'block';
@@ -290,5 +307,60 @@
             });
         });
     </script>
+
+    <!-- In recipes/templates/recipes/base.html -->
+    <script>
+        // Base analytics functions that will be available on all pages
+        function trackEvent(eventName, eventParams = {}) {
+            gtag('event', eventName, {
+                ...eventParams,
+                'page_title': document.title,
+                'page_path': window.location.pathname
+            });
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+
+    <script>
+        // Track session start
+        trackEvent('session_start', {
+            'session_id': Date.now().toString(),
+            'event_category': 'engagement'
+        });
+
+        // Track time spent on page
+        let pageStartTime = Date.now();
+        let maxScrollDepth = 0;
+
+        function trackScrollDepth() {
+            const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            if (scrollDepth > maxScrollDepth) {
+                maxScrollDepth = scrollDepth;
+            }
+        }
+
+        window.addEventListener('scroll', trackScrollDepth);
+
+        window.addEventListener('beforeunload', function () {
+            const timeSpent = Math.round((Date.now() - pageStartTime) / 1000);
+
+            trackEvent('page_engagement', {
+                'time_seconds': timeSpent,
+                'scroll_depth': maxScrollDepth,
+                'event_category': 'engagement'
+            });
+        });
+
+        function trackEvent(eventName, eventParams = {}) {
+            gtag('event', eventName, {
+                ...eventParams,
+                'page_title': document.title,
+                'page_path': window.location.pathname,
+                'user_agent': navigator.userAgent
+            });
+        }
+    </script>
+
 </body>
+
 </html>
