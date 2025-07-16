@@ -8,7 +8,7 @@
             Discover Amazing Recipes
         </h1>
         <p class="hero-subtitle">Turn your ingredients into delicious meals with AI-powered recipe suggestions</p>
-        
+
         <div class="hero-stats">
             <div class="stat-item">
                 <div class="stat-number">10,000+</div>
@@ -31,26 +31,24 @@
         <h2>What's in your kitchen?</h2>
         <p>Enter the ingredients you have and we'll find perfect recipes for you!</p>
     </div>
-    
+
     <form method="POST" action="{% url 'search_recipes' %}" class="search-form">
         {% csrf_token %}
         <div class="search-input-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" 
-                   name="ingredients" 
-                   class="search-input"
-                   placeholder="e.g., chicken, rice, tomatoes, onions..." 
-                   required>
+            <input type="text" name="ingredients" class="search-input"
+                placeholder="e.g., chicken, rice, tomatoes, onions..." required>
             <button type="submit" class="search-btn">
                 <i class="fas fa-magic"></i>
                 Find Recipes
             </button>
         </div>
-        
+
         <div class="search-suggestions">
             <span class="suggestion-label">Popular searches:</span>
             <button type="button" class="suggestion-tag" onclick="fillSearch('chicken pasta')">Chicken Pasta</button>
-            <button type="button" class="suggestion-tag" onclick="fillSearch('vegetarian curry')">Vegetarian Curry</button>
+            <button type="button" class="suggestion-tag" onclick="fillSearch('vegetarian curry')">Vegetarian
+                Curry</button>
             <button type="button" class="suggestion-tag" onclick="fillSearch('salmon rice')">Salmon Rice</button>
             <button type="button" class="suggestion-tag" onclick="fillSearch('beef stir fry')">Beef Stir Fry</button>
         </div>
@@ -64,7 +62,7 @@
 
 <div class="features-section">
     <h2 class="section-title">Why Choose RecipeHub?</h2>
-    
+
     <div class="features-grid">
         <div class="feature-card">
             <div class="feature-icon">
@@ -74,7 +72,7 @@
             <p>Our AI-powered search finds recipes based on ingredients you already have at home</p>
             <div class="feature-highlight">Save time & money</div>
         </div>
-        
+
         <div class="feature-card">
             <div class="feature-icon">
                 <i class="fas fa-chart-pie"></i>
@@ -83,7 +81,7 @@
             <p>Get comprehensive nutritional information for every recipe including calories, proteins, and vitamins</p>
             <div class="feature-highlight">Stay healthy</div>
         </div>
-        
+
         <div class="feature-card">
             <div class="feature-icon">
                 <i class="fas fa-clock"></i>
@@ -92,7 +90,7 @@
             <p>Filter by cooking time, difficulty level, dietary restrictions, and cuisine type</p>
             <div class="feature-highlight">Perfect match</div>
         </div>
-        
+
         <div class="feature-card">
             <div class="feature-icon">
                 <i class="fas fa-heart"></i>
@@ -101,7 +99,7 @@
             <p>Create your personal recipe collection and access your favorite dishes anytime</p>
             <div class="feature-highlight">Never lose recipes</div>
         </div>
-        
+
         <div class="feature-card">
             <div class="feature-icon">
                 <i class="fas fa-calendar-alt"></i>
@@ -110,7 +108,7 @@
             <p>Plan your weekly meals in advance and generate automatic shopping lists</p>
             <div class="feature-highlight">Stay organized</div>
         </div>
-        
+
         <div class="feature-card">
             <div class="feature-icon">
                 <i class="fas fa-users"></i>
@@ -124,7 +122,7 @@
 
 <div class="how-it-works">
     <h2 class="section-title">How It Works</h2>
-    
+
     <div class="steps-container">
         <div class="step-item">
             <div class="step-number">1</div>
@@ -133,11 +131,11 @@
                 <p>Type in the ingredients you have available in your kitchen</p>
             </div>
         </div>
-        
+
         <div class="step-arrow">
             <i class="fas fa-arrow-right"></i>
         </div>
-        
+
         <div class="step-item">
             <div class="step-number">2</div>
             <div class="step-content">
@@ -145,11 +143,11 @@
                 <p>Our AI finds the best recipes that match your ingredients</p>
             </div>
         </div>
-        
+
         <div class="step-arrow">
             <i class="fas fa-arrow-right"></i>
         </div>
-        
+
         <div class="step-item">
             <div class="step-number">3</div>
             <div class="step-content">
@@ -163,7 +161,7 @@
 <style>
     .hero-section {
         background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)),
-                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
         padding: 4rem 0;
         text-align: center;
         color: white;
@@ -184,8 +182,15 @@
     }
 
     @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
     }
 
     .hero-content {
@@ -207,9 +212,22 @@
     }
 
     @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-        40% { transform: translateY(-10px); }
-        60% { transform: translateY(-5px); }
+
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+            transform: translateY(0);
+        }
+
+        40% {
+            transform: translateY(-10px);
+        }
+
+        60% {
+            transform: translateY(-5px);
+        }
     }
 
     .hero-subtitle {
@@ -513,6 +531,7 @@
             opacity: 0;
             transform: translateY(30px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -520,45 +539,50 @@
     }
 
     @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
     }
 
     @media (max-width: 768px) {
         .hero-title {
             font-size: 2.5rem;
         }
-        
+
         .hero-stats {
             flex-direction: column;
             gap: 1rem;
         }
-        
+
         .search-input-container {
             flex-direction: column;
             border-radius: 20px;
         }
-        
+
         .search-input {
             border-radius: 20px 20px 0 0;
             padding-left: 2rem;
         }
-        
+
         .search-btn {
             border-radius: 0 0 20px 20px;
             width: 100%;
             justify-content: center;
             margin-right: 0;
         }
-        
+
         .search-icon {
             left: 1rem;
         }
-        
+
         .steps-container {
             flex-direction: column;
         }
-        
+
         .step-arrow {
             transform: rotate(90deg);
         }
@@ -566,35 +590,64 @@
 </style>
 
 <script>
-function fillSearch(ingredients) {
-    document.querySelector('input[name="ingredients"]').value = ingredients;
-}
+    function fillSearch(ingredients) {
+        document.querySelector('input[name="ingredients"]').value = ingredients;
+    }
 
-// Add loading animation when form is submitted
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('.search-form');
-    const loading = document.getElementById('loadingSpinner');
-    
-    form.addEventListener('submit', function() {
-        loading.classList.add('show');
-    });
-    
-    // Add some interactive animations
-    const featureCards = document.querySelectorAll('.feature-card');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.animation = `slideInUp 0.6s ease-out forwards`;
-                }, index * 100);
-            }
+    // Add loading animation when form is submitted
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.search-form');
+        const loading = document.getElementById('loadingSpinner');
+
+        form.addEventListener('submit', function () {
+            loading.classList.add('show');
+        });
+
+        // Add some interactive animations
+        const featureCards = document.querySelectorAll('.feature-card');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.animation = `slideInUp 0.6s ease-out forwards`;
+                    }, index * 100);
+                }
+            });
+        });
+
+        featureCards.forEach(card => {
+            observer.observe(card);
         });
     });
-    
-    featureCards.forEach(card => {
-        observer.observe(card);
+</script>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchForm = document.querySelector('.search-form');
+
+        if (searchForm) {
+            searchForm.addEventListener('submit', function () {
+                const ingredients = document.querySelector('input[name="ingredients"]').value;
+                trackEvent('search', {
+                    'search_term': ingredients,
+                    'event_category': 'search'
+                });
+            });
+        }
+
+        // Track clicks on suggestion tags
+        document.querySelectorAll('.suggestion-tag').forEach(tag => {
+            tag.addEventListener('click', function () {
+                const ingredients = this.textContent;
+                trackEvent('suggestion_click', {
+                    'suggestion_term': ingredients,
+                    'event_category': 'search'
+                });
+            });
+        });
     });
-});
 </script>
 {% endblock %}

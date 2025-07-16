@@ -4,12 +4,8 @@
 <div class="search-container">
     <form method="POST" action="{% url 'search_recipes' %}" class="search-form">
         {% csrf_token %}
-        <input type="text" 
-               name="ingredients" 
-               value="{{ ingredients }}" 
-               class="search-input"
-               placeholder="Enter ingredients separated by commas" 
-               required>
+        <input type="text" name="ingredients" value="{{ ingredients }}" class="search-input"
+            placeholder="Enter ingredients separated by commas" required>
         <button type="submit" class="search-btn">
             <i class="fas fa-search"></i>
             Search Again
@@ -239,6 +235,7 @@
             opacity: 0;
             max-height: 0;
         }
+
         to {
             opacity: 1;
             max-height: 200px;
@@ -249,11 +246,11 @@
         .results-grid {
             grid-template-columns: 1fr;
         }
-        
+
         .recipe-stats {
             grid-template-columns: 1fr 1fr 1fr;
         }
-        
+
         .recipe-actions {
             flex-direction: column;
         }
@@ -261,87 +258,88 @@
 </style>
 
 {% if recipes %}
-    <div class="results-grid">
-        {% for recipe in recipes %}
-        <div class="recipe-card">
-            {% if recipe.image_url %}
-                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}" class="recipe-image">
-            {% else %}
-                <div class="recipe-image" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                    <i class="fas fa-utensils"></i>
-                </div>
-            {% endif %}
-            
-            <div class="recipe-content">
-                <h3 class="recipe-title">{{ recipe.title }}</h3>
-                
-                <div class="recipe-stats">
-                    <div class="stat-item">
-                        <div class="stat-value">{{ recipe.servings }}</div>
-                        <div class="stat-label">Servings</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">{{ recipe.prep_time }}</div>
-                        <div class="stat-label">Minutes</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">{{ recipe.calories_per_serving }}</div>
-                        <div class="stat-label">Calories</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">{{ recipe.cuisine_type }}</div>
-                        <div class="stat-label">Cuisine</div>
-                    </div>
-                </div>
+<div class="results-grid">
+    {% for recipe in recipes %}
+    <div class="recipe-card">
+        {% if recipe.image_url %}
+        <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}" class="recipe-image">
+        {% else %}
+        <div class="recipe-image"
+            style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+            <i class="fas fa-utensils"></i>
+        </div>
+        {% endif %}
 
-                {% if recipe.diet_labels or recipe.health_labels %}
-                <div class="recipe-tags">
-                    {% for label in recipe.diet_labels %}
-                        <span class="tag">{{ label }}</span>
-                    {% endfor %}
-                    {% for label in recipe.health_labels|slice:":3" %}
-                        <span class="tag">{{ label }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
+        <div class="recipe-content">
+            <h3 class="recipe-title">{{ recipe.title }}</h3>
 
-                <button class="ingredients-toggle" onclick="toggleIngredients(this)">
-                    <i class="fas fa-list"></i> View Ingredients
-                </button>
-                
-                <div class="ingredients-list">
-                    <ul>
-                        {% for ingredient in recipe.ingredients %}
-                            <li>{{ ingredient }}</li>
-                        {% endfor %}
-                    </ul>
+            <div class="recipe-stats">
+                <div class="stat-item">
+                    <div class="stat-value">{{ recipe.servings }}</div>
+                    <div class="stat-label">Servings</div>
                 </div>
-
-                <div class="recipe-actions">
-                    <a href="{{ recipe.source_url }}" target="_blank" class="btn-primary">
-                        <i class="fas fa-external-link-alt"></i>
-                        View Recipe
-                    </a>
-                    <a href="#" class="btn-secondary">
-                        <i class="fas fa-heart"></i>
-                    </a>
+                <div class="stat-item">
+                    <div class="stat-value">{{ recipe.prep_time }}</div>
+                    <div class="stat-label">Minutes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ recipe.calories_per_serving }}</div>
+                    <div class="stat-label">Calories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ recipe.cuisine_type }}</div>
+                    <div class="stat-label">Cuisine</div>
                 </div>
             </div>
+
+            {% if recipe.diet_labels or recipe.health_labels %}
+            <div class="recipe-tags">
+                {% for label in recipe.diet_labels %}
+                <span class="tag">{{ label }}</span>
+                {% endfor %}
+                {% for label in recipe.health_labels|slice:":3" %}
+                <span class="tag">{{ label }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <button class="ingredients-toggle" onclick="toggleIngredients(this)">
+                <i class="fas fa-list"></i> View Ingredients
+            </button>
+
+            <div class="ingredients-list">
+                <ul>
+                    {% for ingredient in recipe.ingredients %}
+                    <li>{{ ingredient }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="recipe-actions">
+                <a href="{{ recipe.source_url }}" target="_blank" class="btn-primary">
+                    <i class="fas fa-external-link-alt"></i>
+                    View Recipe
+                </a>
+                <!-- <a href="#" class="btn-secondary">
+                    <i class="fas fa-heart"></i>
+                </a> -->
+            </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 {% else %}
-    <div class="no-results">
-        <div class="no-results-icon">
-            <i class="fas fa-search"></i>
-        </div>
-        <h3>No recipes found</h3>
-        <p>Try different ingredients or check your spelling!</p>
-        <a href="{% url 'home' %}" class="btn-primary" style="display: inline-flex; margin-top: 1rem;">
-            <i class="fas fa-arrow-left"></i>
-            Try Again
-        </a>
+<div class="no-results">
+    <div class="no-results-icon">
+        <i class="fas fa-search"></i>
     </div>
+    <h3>No recipes found</h3>
+    <p>Try different ingredients or check your spelling!</p>
+    <a href="{% url 'home' %}" class="btn-primary" style="display: inline-flex; margin-top: 1rem;">
+        <i class="fas fa-arrow-left"></i>
+        Try Again
+    </a>
+</div>
 {% endif %}
 
 <div style="text-align: center; margin-top: 3rem;">
@@ -352,17 +350,77 @@
 </div>
 
 <script>
-function toggleIngredients(button) {
-    const ingredientsList = button.nextElementSibling;
-    const icon = button.querySelector('i');
-    
-    if (ingredientsList.classList.contains('show')) {
-        ingredientsList.classList.remove('show');
-        button.innerHTML = '<i class="fas fa-list"></i> View Ingredients';
-    } else {
-        ingredientsList.classList.add('show');
-        button.innerHTML = '<i class="fas fa-times"></i> Hide Ingredients';
+    function toggleIngredients(button) {
+        const ingredientsList = button.nextElementSibling;
+        const icon = button.querySelector('i');
+
+        if (ingredientsList.classList.contains('show')) {
+            ingredientsList.classList.remove('show');
+            button.innerHTML = '<i class="fas fa-list"></i> View Ingredients';
+        } else {
+            ingredientsList.classList.add('show');
+            button.innerHTML = '<i class="fas fa-times"></i> Hide Ingredients';
+        }
     }
-}
+</script>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Track search results view
+        trackEvent('search_results_view', {
+            'search_term': "{{ ingredients }}",
+            'result_count': "{{ total_results }}",
+            'event_category': 'search'
+        });
+
+        // Track recipe impressions (when they become visible)
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        recipeCards.forEach((card, index) => {
+            const recipeTitle = card.querySelector('.recipe-title').textContent;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        trackEvent('recipe_impression', {
+                            'recipe_name': recipeTitle,
+                            'position': index + 1,
+                            'event_category': 'engagement'
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            observer.observe(card);
+        });
+
+        // Track external recipe clicks
+        document.querySelectorAll('.btn-primary[target="_blank"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const recipeTitle = this.closest('.recipe-card').querySelector('.recipe-title').textContent;
+                trackEvent('recipe_click', {
+                    'recipe_name': recipeTitle,
+                    'event_category': 'engagement',
+                    'event_label': 'External Recipe'
+                });
+            });
+        });
+
+        // Track ingredients list toggles
+        document.querySelectorAll('.ingredients-toggle').forEach(button => {
+            button.addEventListener('click', function () {
+                const recipeTitle = this.closest('.recipe-card').querySelector('.recipe-title').textContent;
+                const action = this.textContent.includes('View') ? 'show' : 'hide';
+
+                trackEvent('ingredients_toggle', {
+                    'recipe_name': recipeTitle,
+                    'action': action,
+                    'event_category': 'engagement'
+                });
+            });
+        });
+    });
 </script>
 {% endblock %}
